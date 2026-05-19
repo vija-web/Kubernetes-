@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dbpod
+  namespace: dev
+  labels:
+    environment: dev
+    project: roboshop
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      resources:
+        requests:
+          memory: "15mi"
+          cpu: "100m" # 1000 milli cores = 1cpu
+        limit:
+          memory: "50mi"
+          cpu: "120m"
+    
+  
