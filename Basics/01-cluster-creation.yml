@@ -10,4 +10,5 @@ managedNodeGroups:
     spot: true # to create the spot instances
 
 
+# it will take approx 15 minutes to create the cluster
 # eksctl create cluster --config-file=01-cluster-creation.yml command to run the file
