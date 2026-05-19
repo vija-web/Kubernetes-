@@ -14,7 +14,7 @@ spec:
         requests:
           memory: "15Mi"
           cpu: "100m" # 1000 milli cores = 1cpu
-        limit:
+        limits:
           memory: "50Mi"
           cpu: "120m"
     
