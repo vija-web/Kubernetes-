@@ -12,10 +12,10 @@ spec:
       image: nginx
       resources:
         requests:
-          memory: "15mi"
+          memory: "15Mi"
           cpu: "100m" # 1000 milli cores = 1cpu
         limit:
-          memory: "50mi"
+          memory: "50Mi"
           cpu: "120m"
     
   
