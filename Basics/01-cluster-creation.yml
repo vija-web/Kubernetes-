@@ -11,4 +11,5 @@ managedNodeGroups:
 
 
 # it will take approx 15 minutes to create the cluster
-# eksctl create cluster --config-file=01-cluster-creation.yml command to run the file
+# eksctl create cluster --config-file=01-cluster-creation.yml command to create the cluster
+# eksctl delete cluster --config-file=01-cluster-creation.yml command to delete the cluster
