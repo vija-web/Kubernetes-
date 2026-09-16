@@ -4,6 +4,7 @@ kind: Service
 metadata:
   name: frontendpod
   project: roboshop
+  namespace: roboshop
 spec:
   selectors:
     project: roboshop
@@ -19,6 +20,7 @@ kind: apiVersion: v1
 kind: Pod
 metadata:
   name: nginx
+  namespace: roboshop
   labels:
     project: roboshop
     component: frontendpod
