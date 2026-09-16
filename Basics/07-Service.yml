@@ -5,7 +5,7 @@ metadata:
   name: frontendservice
   namespace: roboshop
 spec:
-  selectors:
+  selector:
     project: roboshop
     component: frontendpod
   ports:
