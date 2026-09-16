@@ -5,8 +5,8 @@ metadata:
   region: us-east-1
 managedNodeGroups:
   - name: cluster1
-    instanceTypes: ["t3.micro" , "t3.medium" , "t3.small"]
-    desiredCapacity: 2 # by default it is 3
+    instanceTypes: ["t3.medium"]
+    desiredCapacity: 3 # by default it is 3
     spot: true # to create the spot instances
 
 
