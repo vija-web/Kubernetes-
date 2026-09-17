@@ -1,4 +1,7 @@
 
+#clusterIP service , If you don't mention any type by default it will create ClusterIP
+# ClusterIP service is used for the pod-to-pod communication
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -27,3 +30,6 @@ spec:
   - name: nginx
     image: nginx
 
+# Here while creating the pod it will check the service that having any selectors matching to my labels
+# then it register its ip to the service
+# we can verify the endpoints by describing the svc

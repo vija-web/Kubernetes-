@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: frontendpod
-  namespace: dev
+  namespace: roboshop
   labels:
     environment: dev
     project: roboshop
