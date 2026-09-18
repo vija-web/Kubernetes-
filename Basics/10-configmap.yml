@@ -17,7 +17,7 @@ metadata:
 spec:
   containers:
   - name: frontend
-    Image: nginx
+    image: nginx
     envFrom:
     - configMapRef:
         name: configmap1
