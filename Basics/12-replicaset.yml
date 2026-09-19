@@ -24,4 +24,4 @@ spec:
     spec:
       containers:
       - name: nginx-pod
-        image: nginx
+        image: vijaykammari/frontend:v1
