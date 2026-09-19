@@ -24,4 +24,5 @@ spec:
     spec:
       containers:
       - name: nginx-pod
-        image: vijaykammari/frontend:v1  # vijaykammari/frontend:v1
+        image: nginx  # vijaykammari/frontend:v1
+        imagePullPolicy: Always
