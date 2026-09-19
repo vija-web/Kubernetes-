@@ -14,7 +14,6 @@ spec:
       project: roboshop
       component: frontend
   template: 
-    name: pod-nginx
     metadata:
       name: pod-deploy-nginx
       namespace: roboshop

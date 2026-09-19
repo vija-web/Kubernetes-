@@ -14,9 +14,8 @@ spec:
       project: roboshop
       component: frontend
   template: 
-    name: pod-nginx
     metadata:
-      name: pod 
+      name: pod-replica-nginx
       namespace: roboshop
       labels:
         name: replicaset 
