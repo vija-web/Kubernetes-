@@ -1,4 +1,16 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  namespace: roboshop
+data:
+  my.cnf: |
+    [mysqld]
+    innodb_redo_log_capacity = 2G
+
+---
+
+apiVersion: v1
 kind: Secret
 metadata:
   name: mysql
@@ -51,6 +63,14 @@ spec:
             initialDelaySeconds: 17
             periodSeconds: 5
             failureThreshold: 1
+          volumeMounts:
+          - name: mysql-config
+            mountPath: /etc/mysql/conf.d/my.cnf 
+            subPath: my.cnf
+      volumes:
+        - name: mysql-config
+          configMap:
+            name: mysql
 
 ---
 
