@@ -1,28 +1,28 @@
 apiVersion: apps/v1
 kind: Deployment 
 metadata:
-  name: Mongodb
+  name: mongodb
   namespace: roboshop
   labels:
     project: project
-    component: Mongodb
+    component: mongodb
     tier: db 
 spec:
   replicas: 1
   selector:
     matchLabels:
       project: project
-      component: Mongodb
+      component: mongodb
       tier: db 
   template:
     metadata:
       labels:
         project: project
-        component: Mongodb
+        component: mongodb
         tier: db
     spec:
       containers:
-        - name: Mongodb
+        - name: mongodb
           image: vijaykammari/mongodb:v1
           imagePullPolicy: Always
           livenessProbe:
@@ -43,12 +43,12 @@ spec:
 apiversion: v1 
 kind: Service 
 metadata:
-  name: Mongodb-Service
+  name: mongodb-service
   namespace: roboshop
 spec: 
   selector: 
     project: project
-    component: Mongodb
+    component: mongodb
     tier: db
   ports: 
   - protocol: TCP
