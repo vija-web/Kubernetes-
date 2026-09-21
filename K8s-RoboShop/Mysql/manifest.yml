@@ -50,19 +50,19 @@ spec:
           - secretRef:
               name: mysql
           imagePullPolicy: Always
-          livenessProbe:
-            tcpSocket:
-              port: 3306
-            initialDelaySeconds: 20
-            periodSeconds: 5
-            timeoutSeconds: 3
-            failureThreshold: 1
-          readinessProbe:
-            tcpSocket:
-              port: 3306
-            initialDelaySeconds: 25
-            periodSeconds: 5
-            failureThreshold: 1
+          # livenessProbe:
+          #   tcpSocket:
+          #     port: 3306
+          #   initialDelaySeconds: 20
+          #   periodSeconds: 5
+          #   timeoutSeconds: 3
+          #   failureThreshold: 1
+          # readinessProbe:
+          #   tcpSocket:
+          #     port: 3306
+          #   initialDelaySeconds: 25
+          #   periodSeconds: 5
+          #   failureThreshold: 1
           volumeMounts:
           - name: mysql-config
             mountPath: /etc/mysql/conf.d/my.cnf 
