@@ -14,30 +14,30 @@ spec:
       project: project
       component: Mongodb
       tier: db 
-template:
-  metadata:
-    labels:
-      project: project
-      component: Mongodb
-      tier: db
-  spec:
-    containers:
-      - name: Mongodb
-        image: vijaykammari/mongodb:v1
-        imagePullPolicy: Always
-        livenessProbe:
-          tcpSocket:
-            port: 27017
-          initialDelaySeconds: 10
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 1
-        readinessProbe:
-          tcpSocket:
-            port: 27017
-          initialDelaySeconds: 12
-          periodSeconds: 5
-          failureThreshold: 1
+  template:
+    metadata:
+      labels:
+        project: project
+        component: Mongodb
+        tier: db
+    spec:
+      containers:
+        - name: Mongodb
+          image: vijaykammari/mongodb:v1
+          imagePullPolicy: Always
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 1
+          readinessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 12
+            periodSeconds: 5
+            failureThreshold: 1
 
 ---
 apiversion: v1 
