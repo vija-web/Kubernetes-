@@ -53,14 +53,14 @@ spec:
           livenessProbe:
             tcpSocket:
               port: 3306
-            initialDelaySeconds: 15
+            initialDelaySeconds: 20
             periodSeconds: 5
             timeoutSeconds: 3
             failureThreshold: 1
           readinessProbe:
             tcpSocket:
               port: 3306
-            initialDelaySeconds: 17
+            initialDelaySeconds: 25
             periodSeconds: 5
             failureThreshold: 1
           volumeMounts:
