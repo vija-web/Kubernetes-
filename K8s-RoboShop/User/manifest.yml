@@ -31,7 +31,7 @@ spec:
       labels: 
         project: roboshop
         component: user 
-        tier: d
+        tier: application
     spec: 
       containers: 
       - name: user 
