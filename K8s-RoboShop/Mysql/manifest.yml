@@ -67,10 +67,17 @@ spec:
           - name: mysql-config
             mountPath: /etc/mysql/conf.d/my.cnf 
             subPath: my.cnf
+          volumeMounts:
+          - name: cache-volume
+            mountPath: /var/lib/mysql/
       volumes:
         - name: mysql-config
           configMap:
             name: mysql
+      volumes:
+      - name: cache-volume
+        emptyDir:
+          sizeLimit: 2Gi
 
 ---
 
