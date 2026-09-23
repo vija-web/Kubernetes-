@@ -17,7 +17,6 @@ kind: Secret
 metadata:
   name: payments
   namespace: roboshop
-type: Opaque
 data:
   AMQP_USER: "cm9ib3Nob3AK"
   AMQP_PASS: "cm9ib3Nob3AxMjMK"

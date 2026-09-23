@@ -40,14 +40,17 @@ spec:
         - name: rabbitmq 
           image: vijaykammari/rabbitmq:v1 
           imagePullPolicy: Always
+          envFrom:
+          - secretRef: 
+              name: rabbitmq
 
 --- 
 
 apiVersion: v1 
 kind: Service 
 metadata: 
-  name: rabbitmq
-  name: roboshop 
+  name: rabbitmq 
+  namespace: roboshop
 spec: 
   selector: 
     project: roboshop 
