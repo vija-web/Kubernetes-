@@ -16,7 +16,7 @@ metadata:
   name: mysql
   namespace: roboshop
 data:
-  MYSQL_ROOT_PASSWORD: "Um9ib3Nob3BAMQo="
+  MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQo="
 
 ---
 
