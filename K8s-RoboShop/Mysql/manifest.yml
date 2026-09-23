@@ -1,6 +1,16 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: mysqlc
+  namespace: roboshop
+data:
+  MYSQL_ROOT_PASSWORD: "RoboShop@1"
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: mysql
   namespace: roboshop
 data:
@@ -10,13 +20,13 @@ data:
 
 ---
 
-apiVersion: v1
-kind: Secret
-metadata:
-  name: mysql
-  namespace: roboshop
-data:
-  MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQ=="
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: mysql
+#   namespace: roboshop
+# data:
+#   MYSQL_ROOT_PASSWORD: "Um9ib1Nob3BAMQ=="
 
 ---
 
