@@ -15,3 +15,6 @@ spec:
   - name: persistent-storage
     persistentVolumeClaim:
       claimName: ebs-claim-static
+
+# before creating the pod makesure IAM policy of the instances having the ebsdrivers policy
+# https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/examples/kubernetes/static-provisioning/manifests/pod.yaml
