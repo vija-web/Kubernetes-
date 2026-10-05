@@ -14,5 +14,27 @@ spec:
     persistentVolumeClaim:
       claimName: ebs-claim-dynamic
 
+--- 
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: nginx-headless
+  labels: 
+    project: roboshop
+    component: shipping 
+    tier: frontend
+spec: 
+  clusterIp: None
+  selector: 
+    project: roboshop
+    component: shipping 
+    tier: frontend
+  ports: 
+  - protocol: TCP 
+    port: 80
+    targetPort: 80
+
 # So here no need to give nodeselector because , where the pod is created in that 
 # avz the storageclass will create the requested ebs storage.
+# https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/examples/kubernetes/dynamic-provisioning/manifests/pod.yaml
