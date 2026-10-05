@@ -1,0 +1,28 @@
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  name: emptydir 
+  namespace: roboshop
+  labels: 
+    project: roboshop 
+    component: frontend 
+spec: 
+  containers: 
+    - name: nginx 
+      image: nginx 
+      imagePullPolicy: Always
+      volumeMounts:
+        - name: logs
+          mountPath: /var/log/nginx
+    - name: sidecar
+      image: almalinux:9 
+      imagePullPolicy: Always
+      command: ["sleep" , "1000"]
+      volumeMounts:
+        - name: logs
+          mountPath: /var/log/nginx
+          readOnly: true
+  volumes:
+  - name: logs 
+    emptyDir:
+      sizeLimit: 2Gi
