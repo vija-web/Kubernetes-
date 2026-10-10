@@ -49,14 +49,14 @@ spec:
         livenessProbe:
           tcpSocket:
             port: 5672
-          initialDelaySeconds: 26
+          initialDelaySeconds: 61
           periodSeconds: 5
           timeoutSeconds: 3
           failureThreshold: 1
         readinessProbe:
           tcpSocket:
             port: 5672
-          initialDelaySeconds: 25
+          initialDelaySeconds: 60
           periodSeconds: 5
           failureThreshold: 1
         volumeMounts:
