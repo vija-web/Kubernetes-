@@ -97,20 +97,20 @@ spec:
       - name: frontend 
         image: vijaykammari/frontend:v1
         imagePullPolicy: Always
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 120
-          periodSeconds: 5
-          timeoutSeconds: 3
-          failureThreshold: 1
-        readinessProbe:
-          tcpSocket:
-            port: 80
-          initialDelaySeconds: 119
-          periodSeconds: 5
-          failureThreshold: 1
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 80
+        #   initialDelaySeconds: 120
+        #   periodSeconds: 5
+        #   timeoutSeconds: 3
+        #   failureThreshold: 1
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 80
+        #   initialDelaySeconds: 119
+        #   periodSeconds: 5
+        #   failureThreshold: 1
         volumeMounts:
         - name: nginx-config
           mountPath: /etc/nginx/nginx.conf
