@@ -8,7 +8,7 @@ spec:
       project: roboshop
       component: redis
       tier: db # has to match .spec.template.metadata.labels
-  serviceName: "redis_headless"
+  serviceName: "redis-headless"
   replicas: 2 # by default is 1
   template:
     metadata:
@@ -80,7 +80,7 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata:
-  name: redis_headless
+  name: redis-headless
   namespace: roboshop
   labels: 
     project: roboshop

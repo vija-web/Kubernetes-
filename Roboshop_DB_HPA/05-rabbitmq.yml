@@ -23,7 +23,7 @@ spec:
       project: roboshop
       component: rabbitmq
       tier: db # has to match .spec.template.metadata.labels
-  serviceName: "rabbitmq_headless"
+  serviceName: "rabbitmq-headless"
   replicas: 2 # by default is 1
   template:
     metadata:
@@ -97,7 +97,7 @@ metadata:
   name: rabbitmq_headless
   namespace: roboshop
 spec: 
-  clusterIp: None
+  clusterIP: None
   selector: 
     project: roboshop 
     component: rabbitmq 

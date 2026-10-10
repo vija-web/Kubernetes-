@@ -30,7 +30,7 @@ spec:
       project: roboshop
       component: mysql
       tier: db # has to match .spec.template.metadata.labels
-  serviceName: "mysql_headless"
+  serviceName: "mysql-headless"
   replicas: 2 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
@@ -110,10 +110,10 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata:
-  name: mysql_headless
+  name: mysql-headless
   namespace: roboshop
 spec: 
-  clusterIp: None
+  clusterIP: None
   selector: 
     project: roboshop
     component: mysql
