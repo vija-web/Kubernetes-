@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysqlc
+  namespace: roboshop
+data:
+  MYSQL_ROOT_PASSWORD: "RoboShop@1"
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql
+  namespace: roboshop
+data:
+  my.cnf: |
+    [mysqld]
+    innodb_redo_log_capacity = 2G
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      project: roboshop
+      component: mysql
+      tier: db # has to match .spec.template.metadata.labels
+  serviceName: "mysql_headless"
+  replicas: 2 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        component: mysql
+        tier: db # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: mysql
+        image: vijaykammari/mysql:v1
+        imagePullPolicy: Always
+        envFrom:
+          - configMapRef:
+              name: mysqlc
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "200Mi"
+            cpu: "300m"
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 26
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 1
+        readinessProbe:
+          tcpSocket:
+            port: 3306
+          initialDelaySeconds: 25
+          periodSeconds: 5
+          failureThreshold: 1
+        volumeMounts:
+        - name: www
+          mountPath: /var/lib/mysql/
+        - name: mysql-config
+          mountPath: /etc/mysql/conf.d/my.cnf 
+          subPath: my.cnf
+      volumes:
+        - name: mysql-config
+          configMap:
+            name: mysql   
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi
+
+
+---
+
+apiVersion: v1 
+kind: Service
+metadata:
+  name: mysql
+  namespace: roboshop
+spec:
+  selector:
+    project: roboshop
+    component: mysql
+    tier: db
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+
+--- 
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: mysql_headless
+  namespace: roboshop
+spec: 
+  clusterIp: None
+  selector: 
+    project: roboshop
+    component: mysql
+    tier: db
+  ports: 
+  - protocol: TCP
+    port: 3306 # service port
+    targetPort: 3306  #container port

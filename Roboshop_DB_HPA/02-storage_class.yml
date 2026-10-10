@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer # after the pod created then only the ebs volume will be created
+
+# same for the nfs (Network File Storage) , just open the 2049 port in the sg of nfs and allow all instances with the sg grouo
+# install the nfs drivers in the main server

@@ -1,0 +1,98 @@
+apiVersion: v1 
+kind: ConfigMap
+metadata: 
+  name: user 
+  namespace: roboshop 
+data: 
+  MONGO: "true" 
+  REDIS_URL: "redis://redis:6379"
+  MONGO_URL: "mongodb://mongodb:27017/users"
+  
+---
+
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: user
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: user 
+    tier: application 
+spec: 
+  replicas: 1 
+  selector: 
+    matchLabels: 
+      project: roboshop
+      component: user 
+      tier: application
+  template: 
+    metadata: 
+      labels: 
+        project: roboshop
+        component: user 
+        tier: application
+    spec: 
+      containers: 
+      - name: user 
+        image: vijaykammari/user:v1
+        imagePullPolicy: Always
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 11
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 1
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 1
+        envFrom: 
+        - configMapRef: 
+            name: user
+
+--- 
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: user
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: user 
+    tier: application
+spec: 
+  selector: 
+    project: roboshop
+    component: user 
+    tier: application
+  ports: 
+  - protocol: TCP 
+    port: 8080
+    targetPort: 8080
+
+---
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: user-hpa
+  namespace: roboshop
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: user
+  minReplicas: 1
+  maxReplicas: 5 #70 in the real projects
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 5

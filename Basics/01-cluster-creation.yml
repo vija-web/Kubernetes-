@@ -6,7 +6,7 @@ metadata:
 managedNodeGroups:
   - name: cluster1
     instanceTypes: ["t3.large"]
-    desiredCapacity: 3 # by default it is 3
+    desiredCapacity: 4 # by default it is 3
     spot: true # to create the spot instances
 
 

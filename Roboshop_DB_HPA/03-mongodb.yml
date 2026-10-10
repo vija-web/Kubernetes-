@@ -1,0 +1,93 @@
+# For DB we need one head-less service , ClusterIP service , statefulset
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: mongodb
+  namespace: roboshop
+spec: 
+  selector: 
+    project: roboshop
+    component: mongodb
+    tier: db
+  ports: 
+  - protocol: TCP
+    port: 27017 # service port
+    targetPort: 27017  #container port
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: mongodb_headless
+  namespace: roboshop
+spec: 
+  clusterIp: None
+  selector: 
+    project: roboshop
+    component: mongodb
+    tier: db
+  ports: 
+  - protocol: TCP
+    port: 27017 # service port
+    targetPort: 27017  #container port
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+spec:
+  selector:
+    matchLabels:
+      project: roboshop
+      component: mongodb
+      tier: db # has to match .spec.template.metadata.labels
+  serviceName: "mongodb_headless"
+  replicas: 2 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        component: mongodb
+        tier: db # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: mongodb
+        image: vijaykammari/mongodb:v1
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "20Mi"
+            cpu: "150m"
+          limits:
+            memory: "128Mi"
+            cpu: "300m"
+        livenessProbe:
+          tcpSocket:
+            port: 27017
+          initialDelaySeconds: 13
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 1
+        readinessProbe:
+          tcpSocket:
+            port: 27017
+          initialDelaySeconds: 12
+          periodSeconds: 5
+          failureThreshold: 1
+        volumeMounts:
+        - name: www
+          mountPath: /data/db
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi

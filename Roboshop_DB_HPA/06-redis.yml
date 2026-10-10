@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+spec:
+  selector:
+    matchLabels:
+      project: roboshop
+      component: redis
+      tier: db # has to match .spec.template.metadata.labels
+  serviceName: "redis_headless"
+  replicas: 2 # by default is 1
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        component: redis
+        tier: db # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: redis
+        image: vijaykammari/redis:v1
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
+        livenessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 26
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 1
+        readinessProbe:
+          tcpSocket:
+            port: 6379
+          initialDelaySeconds: 25
+          periodSeconds: 5
+          failureThreshold: 1
+        volumeMounts:
+        - name: www
+          mountPath: /data  
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi
+
+--- 
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: redis
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: redis 
+    tier: db
+spec: 
+  selector: 
+    project: roboshop
+    component: redis 
+    tier: db
+  ports: 
+  - protocol: TCP 
+    port: 6379
+    targetPort: 6379
+
+---
+
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: redis_headless
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: redis 
+    tier: db
+spec:
+  ClusterIP: None
+  selector: 
+    project: roboshop
+    component: redis 
+    tier: db
+  ports: 
+  - protocol: TCP 
+    port: 6379
+    targetPort: 6379
