@@ -20,7 +20,7 @@ spec:
 apiVersion: v1 
 kind: Service 
 metadata:
-  name: mongodb_headless
+  name: mongodb-headless
   namespace: roboshop
 spec: 
   clusterIp: None
@@ -45,7 +45,7 @@ spec:
       project: roboshop
       component: mongodb
       tier: db # has to match .spec.template.metadata.labels
-  serviceName: "mongodb_headless"
+  serviceName: "mongodb-headless"
   replicas: 2 # by default is 1
   minReadySeconds: 10 # by default is 0
   template:
