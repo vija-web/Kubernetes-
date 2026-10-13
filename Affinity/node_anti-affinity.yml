@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      # hard rule
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: NotIn #
+            values:
+            - us-east-1a
+            - us-east-1b
+      # soft rule
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100   # this weight is more it was taken as first preference
+        preference:
+          matchExpressions:
+          - key: name
+            operator: In
+            values:
+            - vikram-aditya
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: name
+            operator: In
+            values:
+            - vijay
+  containers:
+  - name: nginx
+    image: nginx:latest
+
+# schedule the pod where the node labels are not equal to 
+# topology.kubernetes.io/zone = us-east-1a
+# topology.kubernetes.io/zone = us-east-1b  and prefer where the node label havinf name=vikram-aditya if not name=vijay
