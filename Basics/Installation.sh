@@ -17,3 +17,5 @@ sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
 sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 curl -sS https://webinstall.dev/k9s | bash
+
+sudo dnf install helm
