@@ -1,0 +1,6 @@
+mongodb:
+  port: 27017
+  replicas: 1
+  version: "v1"
+
+# you can maintain different kind of values.yml file for all the different environments

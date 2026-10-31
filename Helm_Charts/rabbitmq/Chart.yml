@@ -1,0 +1,5 @@
+apiVersion: v2
+name: rabbitmq # helmchart name
+description: This helm-chart is for the rabbitmq component
+version: 0.1.0 # chart version , every time you done the helm it is recommened to increment this version
+appVersion: "v1"

@@ -1,0 +1,18 @@
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: catalogue
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: catalogue 
+    tier: application
+spec: 
+  selector: 
+    project: roboshop
+    component: catalogue 
+    tier: application
+  ports: 
+  - protocol: TCP 
+    port: 8080
+    targetPort: 8080

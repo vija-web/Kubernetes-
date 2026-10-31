@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    matchLabels:
+      project: roboshop
+      component: rabbitmq
+      tier: db # has to match .spec.template.metadata.labels
+  serviceName: "rabbitmq-headless"
+  replicas: {{ .Values.rabbitmq.replicas }} # by default is 1
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        component: rabbitmq
+        tier: db # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: rabbitmq
+        image: vijaykammari/rabbitmq:v1
+        imagePullPolicy: Always
+        envFrom:
+          - secretRef: 
+              name: rabbitmq
+        resources:
+          requests:
+            memory: "200Mi"
+            cpu: "200m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
+        livenessProbe:
+          tcpSocket:
+            port: 5672
+          initialDelaySeconds: 80
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 1
+        readinessProbe:
+          tcpSocket:
+            port: 5672
+          initialDelaySeconds: 79
+          periodSeconds: 5
+          failureThreshold: 1
+        volumeMounts:
+        - name: www
+          mountPath: /var/lib/rabbitmq/ 
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi

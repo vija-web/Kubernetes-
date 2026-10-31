@@ -1,0 +1,49 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: frontend
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: frontend 
+    tier: application 
+spec: 
+  replicas: {{ .Values.frontend.replicas }} 
+  selector: 
+    matchLabels: 
+      project: roboshop
+      component: frontend 
+      tier: application
+  template: 
+    metadata: 
+      labels: 
+        project: roboshop
+        component: frontend 
+        tier: application
+    spec: 
+      containers: 
+      - name: frontend 
+        image: vijaykammari/frontend:v1
+        imagePullPolicy: Always
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 80
+        #   initialDelaySeconds: 120
+        #   periodSeconds: 5
+        #   timeoutSeconds: 3
+        #   failureThreshold: 1
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 80
+        #   initialDelaySeconds: 119
+        #   periodSeconds: 5
+        #   failureThreshold: 1
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: frontend

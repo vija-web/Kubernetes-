@@ -1,0 +1,15 @@
+apiVersion: v2
+name: mongodb # helmchart name
+description: This helm-chart is for the mongodb component
+version: 0.1.0 # chart version , every time you done the helm it is recommened to increment this version
+appVersion: "1.16.0" # image version of mongodb
+
+# This chart.yml file is only for our reference alone , It will not have any link with the manifest files
+
+# helm install <chart_name> <directory>
+# helm install mongodb .
+# helm list => lists the all charts
+# helm upgrade <chart_name> <directory>
+# helm history <chart_name> => gives the all history of the chart with revision
+# helm rollback <chart_name> <revision_number>
+# helm uninstall <chart_name>

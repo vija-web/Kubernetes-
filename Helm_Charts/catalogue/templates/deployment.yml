@@ -1,0 +1,43 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: catalogue
+  namespace: roboshop
+  labels: 
+    project: roboshop
+    component: catalogue 
+    tier: application 
+spec: 
+  replicas: {{ .Values.catalogue.replicas }}
+  selector: 
+    matchLabels: 
+      project: roboshop
+      component: catalogue 
+      tier: application
+  template: 
+    metadata: 
+      labels: 
+        project: roboshop
+        component: catalogue 
+        tier: application
+    spec: 
+      containers: 
+      - name: catalogue 
+        image: vijaykammari/catalogue:v1
+        imagePullPolicy: Always
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 11
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 1
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          failureThreshold: 1
+        envFrom: 
+        - configMapRef: 
+            name: catalogue

@@ -1,0 +1,15 @@
+apiVersion: v1 
+kind: Service 
+metadata: 
+  name: rabbitmq-headless
+  namespace: roboshop
+spec: 
+  clusterIP: None
+  selector: 
+    project: roboshop 
+    component: rabbitmq 
+    tier: db
+  ports: 
+  - protocol: TCP 
+    port: 5672
+    targetPort: 5672
