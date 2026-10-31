@@ -1,0 +1,32 @@
+sudo dnf install helm
+
+kubectl config get-contexts
+This command shows the currently which cluster was pointed to
+
+CURRENT   NAME              CLUSTER
+*         dev-cluster       dev-cluster
+          test-cluster     test-cluster
+          prod-cluster     prod-cluster
+
+kubectl config use-context dev-cluster
+This command points to the dev-cluster 
+
+you can pass directly in the helm command as well
+helm install roboshop ./roboshop \
+  --kube-context dev-cluster
+
+helm install roboshop ./roboshop \
+  -f values-dev.yaml \
+  --kube-context dev-cluster
+you can pass the values-dev.yaml file also 
+
+###
+
+helm install <chart_name> <directory> 
+helm upgrade <chart_name> <directory> -f values-dev.yml --set service.targetport="80"
+helm rollback <chart_name> -> rollback to the previous revision
+helm rollback <chart_name> 1 -> rollback to the 1st version
+helm list -> lists all the charts
+helm uninstall <chart_name>
+helm history <chart_name> 
+helm status <chart_name> -> shows what all resources created 
