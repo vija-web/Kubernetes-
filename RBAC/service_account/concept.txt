@@ -1,0 +1,36 @@
+1. Create the policy with permission for accessing the aws secret manager 
+    can read the value permission you can provide.
+2. associate your cluster with the OIDC ( Open ID Connect ). Where it generates the unique code for
+    your cluster.
+
+    eksctl utils associate-iam-oidc-provider --cluster roboshopcluster --approve
+3. Now create the service account 
+
+    eksctl create iamserviceaccount --cluster roboshopcluster --name secret-reader --namespace roboshop --attach-policy-arn <arn> --approve
+
+    This command will create the service account and IAM role and attach the policy and also with help of OIDC attach the trust policy as well to the role.
+
+Why trust policy ?
+===========
+Because IAM should know from which cluster i am getting the request that to prove job is of OIDC
+and then what was role and policy attached to that role these all thing will get evaluated.
+
+OIDC is the Identity federation.
+
+This is best way for accessing the  like usernames/passwords , kubernetes secrets resource is actually not a secret it the encoded value not any encrypted
+
+You can create the with .yml also service account but you should create the role and attach the policy to read the secret manager
+
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::3551584867047:role/eksctl-roboshopcluster-addon-iamserviceaccoun-Role1-BvOrHL2FdUBJ
+  creationTimestamp: "2026-11-01T08:43:01Z"
+  labels:
+    app.kubernetes.io/managed-by: eksctl
+  name: secret-reader
+  namespace: roboshop
+  resourceVersion: "3111"
+  uid: 94f67afe-8744-4386-bfcc-996a0ecb76c9
