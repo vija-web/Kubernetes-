@@ -1,2 +1,22 @@
 # Used for authencation purpose with IAM 
 
+apiVersion: v1
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::337756367047:role/eksctl-roboshopcluster-nodegroup-c-NodeInstanceRole-6Wn1a8Fl2EZL
+      groups:
+      - system:bootstrappers
+      - system:nodes
+      username: system:node:{{EC2PrivateDNSName}}
+  mapUsers: |
+    - userarn: arn:aws:iam::337756367047:user/vijay
+      username: vijay
+      groups:
+        - trainee
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-11-01T02:51:39Z"
+  name: aws-auth
+  namespace: kube-system
+  resourceVersion: "1215"
+  uid: 52b17ed6-39c2-4f29-843b-fa53c701dbf5
