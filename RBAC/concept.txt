@@ -1,0 +1,29 @@
+RBAC ( Role Based Access Control )
+
+Authentication will be done by the IAM 
+Authorization will be done by the eks 
+
+Create eks cluster 
+
+Create one IAM user for vijay, and attach the policy with permission describe cluster
+
+kubectl get configMap aws-auth -n kube-system -o yaml
+- You get the aws-auth configMap file so you need to mapuser with the arn and the username
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapUsers: |
+    - userarn: arn:aws:iam::123456789012:user/vijay
+      username: vijay
+      groups:
+        - system:masters
+
+
+aws eks update-kubeconfig --region us-east-1 --name roboshopcluster
+
+
+

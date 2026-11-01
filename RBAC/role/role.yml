@@ -1,0 +1,9 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: trainee
+  namespace: roboshop
+rules:
+  - apiGroups: [""] # all core groups
+    resources: ["pods", "services", "configmaps"]
+    verbs: ["get", "list", "watch"]
