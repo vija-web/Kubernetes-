@@ -34,3 +34,5 @@ metadata:
   namespace: roboshop
   resourceVersion: "3111"
   uid: 94f67afe-8744-4386-bfcc-996a0ecb76c9
+
+
